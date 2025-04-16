@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', function () {
             return redirect()->route('admin.statistic.index');
         })->name('dashboard');
+
+        Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+
         Route::resource('statistic', StatisticController::class);
         Route::resource('contacts', ContactController::class)->except(['create', 'store']);
         Route::resource('account', AccountController::class);
@@ -98,6 +101,5 @@ Route::middleware('auth')->group(function () {
     Route::get('user/orders/{order}', [UserOrderController::class, 'show'])
         ->middleware('auth')
         ->name('user.order.detail');
-        Route::post('user/orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('orders.cancel');
-
+    Route::post('user/orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('orders.cancel');
 });

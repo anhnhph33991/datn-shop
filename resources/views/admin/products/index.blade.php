@@ -1,127 +1,133 @@
-@extends('admin.layouts.index')
-
+@extends('admin.layouts.master')
+@section('title', 'Danh sách sản phẩm')
 @section('content')
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0 font-size-18">Danh sách sản phẩm</h4>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12 mb-3 mb-lg-5">
-            <div class="overflow-hidden card table-nowrap table-card">
-                <div class="card-header d-flex justify-content-between align-items-center border-0">
-                    <h5 class="mb-0">Danh sách sản phẩm</h5>
-                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary btn-sm ms-auto">Thêm sản phẩm</a>
-                </div>
-                {{-- Thanh tìm kiếm và lọc danh mục --}}
-                <form action="{{ route('admin.products.index') }}" method="GET" class="mb-3 px-3">
-                    <div class="row">
-                        <div class="col-md-3 ms-auto">
-                            <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="{{ request('search') }}">
-                        </div>
-                        <div class="col-md-2">
-                            <select name="category_id" class="form-control">
-                                <option value="">Tất cả danh mục</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary w-100" type="submit">Tìm kiếm</button>
-                        </div>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item active">Quản lý sản phẩm</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-sm-8">
+                        <form action="{{ route('admin.products.index') }}" method="GET" class="text-start">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="{{ request('search') }}">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="category_id" class="form-select">
+                                        <option value="">Tất cả danh mục</option>
+                                        @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary w-100" type="submit">Tìm kiếm</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
-                
+                    <div class="col-sm-4">
+                        <div class="text-sm-end">
+                            <a href="{{ route('admin.products.create') }}" class="btn btn-success waves-effect waves-light mb-2 me-2 addCustomers-modal">
+                                <i class="mdi mdi-plus me-1"></i>
+                                Thêm
+                            </a>
+                        </div>
+                    </div><!-- end col-->
+                </div>
 
-                <div class="table-responsive">
-                    <table class="table mb-0">
-                        <thead class="small text-uppercase bg-body text-muted">
-                            <tr>
-                                <th>#</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Danh mục</th>
-                                <th>Ảnh</th>
-                                <th>Giá</th>
-                                <th>Số lượng</th>
-                                <th>Trạng thái</th>
-                                <th class="text-end">Hành động</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($products as $product)
-                                <tr class="align-middle">
-                                    <td>{{ $product->id }}</td>
+                <div class="table-responsive min-vh-100">
+                    @if ($products->isNotEmpty())
+                    <div class="min-vh-100">
+                        <table class="table align-middle table-nowrap text-center dt-responsive nowrap w-100">
+                            <thead class="">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Danh mục</th>
+                                    <th>Ảnh</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach ($products as $product)
+                                <tr>
+                                    <td>
+                                        {{ $loop->iteration }}
+                                    </td>
+
                                     <td>{{ $product->name }}</td>
+
                                     <td>{{ $product->category ? $product->category->name : 'Không có' }}</td>
+
                                     <td>
                                         @if($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="avatar sm rounded-pill me-3" width="50">
+                                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="avatar sm rounded-pill me-3" width="50">
                                         @else
-                                            Không có ảnh
+                                        <img src="https://laravel.com/img/logomark.min.svg" alt="Image Default" style="height: 40px; width: 40px">
                                         @endif
                                     </td>
+
                                     <td>{{ number_format($product->price, 0, ',', '.') }} đ</td>
                                     <td>{{ $product->quantity }}</td>
+
                                     <td>
-                                        <span class="badge {{ $product->status ? 'badge-success' : 'badge-secondary' }}">
+                                        <span class="badge font-size-12 p-2 {{ $product->status ? 'bg-success' : ' bg-danger' }}">
                                             {{ $product->status ? 'Hiển thị' : 'Ẩn' }}
                                         </span>
                                     </td>
-                                    <td class="text-end">
-                                        <div class="drodown">
-                                            <a data-bs-toggle="dropdown" href="#" class="btn p-1">
-                                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a href="{{ route('admin.products.show', $product->id) }}" class="dropdown-item">Chi tiết</a>
-                                                <a href="{{ route('admin.products.edit', $product->id) }}" class="dropdown-item">Sửa</a>
-                                                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="dropdown-item text-danger">Xóa</button>
-                                                </form>
-                                            </div>
-                                        </div>
+
+                                    <td>
+                                        <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit">
+                                            </i>
+
+                                        </a>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="8" class="text-center">Không có sản phẩm nào</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @else
+                    <div class="min-vh-100 text-center align-content-center">
+                        <h1 class="text-danger">Không có data !!!</h1>
+                    </div>
+                    @endif
                 </div>
-                
-                <div class="d-flex justify-content-center mt-3">
-                    {{ $products->links() }}
+
+                @if ($products->isNotEmpty())
+                <div class="row">
+                    {{ $products->links('admin.layouts.components.pagination') }}
                 </div>
+                @endif
+
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    body{margin-top:20px;
-background:#eee;
-}
-.card {
-    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
-}
-.avatar.sm {
-    width: 2.25rem;
-    height: 2.25rem;
-    font-size: .818125rem;
-}
-.table-nowrap .table td, .table-nowrap .table th {
-    white-space: nowrap;
-}
-.table>:not(caption)>*>* {
-    padding: 0.75rem 1.25rem;
-    border-bottom-width: 1px;
-}
-table th {
-    font-weight: 600;
-    background-color: #eeecfd !important;
-}
-</style>
+
 @endsection
