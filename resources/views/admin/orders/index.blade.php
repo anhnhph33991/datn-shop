@@ -72,11 +72,11 @@
                     ];
 
                     $statusColor = [
-                    'pending' => 'badge-warning',
-                    'processing' => 'badge-primary',
-                    'shipping' => 'badge-info',
-                    'completed' => 'badge-success',
-                    'cancelled' => 'badge-danger',
+                    'pending' => 'bg-warning',
+                    'processing' => 'bg-primary',
+                    'shipping' => 'bg-info',
+                    'completed' => 'bg-success',
+                    'cancelled' => 'bg-danger',
                     ];
                     @endphp
 
@@ -106,16 +106,10 @@
                                     <td>{{ number_format($order->total_money, 0, ',', '.') }} đ</td>
                                     <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
                                     <td>
-                                        <span class="badge {{ $statusColor[$order->status] ?? 'badge-secondary' }}">
+                                        <span class="badge p-2 {{ $statusColor[$order->status] ?? 'badge-secondary' }}">
                                             {{ $statusMapping[$order->status] ?? 'Không xác định' }}
                                         </span>
                                     </td>
-                                    {{--
-                                    <td>
-                                        <span class="badge font-size-12 p-2 {{ $voucher->is_active ? 'bg-success' : ' bg-danger' }}">
-                                    {{ $voucher->is_active ? 'Kích hoạt' : 'Tắt' }}
-                                    </span>
-                                    </td> --}}
 
                                     <td>
                                         <a href="{{ route('admin.orders.show', $order) }}" class="btn btn-warning btn-sm">
