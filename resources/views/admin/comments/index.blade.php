@@ -32,13 +32,12 @@
                                     <th>Người bình luận</th>
                                     <th>Đánh giá</th>
                                     <th>Nội dung</th>
-                                    <th>Hành động</th>
                                 </tr>
                             </thead>
 
                             <tbody>
 
-                                @foreach ($comments as $voucher)
+                                @foreach ($comments as $comment)
                                 <tr>
                                     <td>
                                         {{ $loop->iteration }}
@@ -48,16 +47,6 @@
                                     <td>{{ $comment->user->name }}</td>
                                     <td>{{ $comment->rating }} ★</td>
                                     <td>{{ $comment->content }}</td>
-
-                                    
-
-                                    <td>
-                                        <a href="{{ route('admin.comments.edit', $voucher) }}" class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit">
-                                            </i>
-
-                                        </a>
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
