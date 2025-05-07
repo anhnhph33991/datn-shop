@@ -180,8 +180,60 @@ return asset($default); // ảnh mặc định (đặt ở public/images/default
                     </div>
                     <!-- End .social-icons -->
 
-                    <a href="wishlist.html" class="btn-icon-wish add-wishlist" title="Add to Wishlist"><i class="icon-wishlist-2"></i><span>Add to
-                            Wishlist</span></a>
+                    <a href="wishlist.html" class="btn-icon-wish add-wishlist" title="Add to Wishlist">
+                        <i class="icon-wishlist-2"></i>
+                        <span>Add to Wishlist</span>
+                    </a>
+
+                    @if(Auth::check())
+                    <a onclick="handleShowModalChat()" style="cursor: pointer" class="add-wishlist" title="Nhắn tin với shop 1-1">
+                        <i class="fa-regular fa-message"></i>
+                        <span>Nhắn Tin</span>
+                    </a>
+
+                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5 text-center" id="myModalLabel">
+                                        Tin nhắn
+                                    </h1>
+                                    <button id="modal-button-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <ul class="box-chat-client-ul"></ul>
+
+                                    <form id="chat-box" action="{{ route('admin.chats.write', 1) }}" method="POST" class="row">
+                                        @csrf
+                                        <div class="col">
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control chat-input" placeholder="Nhập tin nhắn của bạn..." name="message" id="chat-client-message">
+                                                <div class="chat-input-links" id="tooltip-container">
+                                                    <ul class="list-inline mb-0">
+                                                        <li class="list-inline-item"><a href="javascript: void(0);" title="Emoji"><i class="mdi mdi-emoticon-happy-outline"></i></a>
+                                                        </li>
+                                                        <li class="list-inline-item"><a href="javascript: void(0);" title="Images"><i class="mdi mdi-file-image-outline"></i></a></li>
+                                                        <li class="list-inline-item"><a href="javascript: void(0);" title="Add Files"><i class="mdi mdi-file-document-outline"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="button" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light" onclick="handleApply('1')">
+                                                <span class="d-none d-sm-inline-block me-2">Gửi</span>
+                                                <i class="mdi mdi-send"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 </div>
                 <!-- End .product single-share -->
             </div>
@@ -443,4 +495,36 @@ return asset($default); // ảnh mặc định (đặt ở public/images/default
 </section>
 
 </div>
+@endsection
+
+@section('script')
+
+@if(Auth::check())
+@php
+$senderType = Auth::user()->role_id == 1 ? 'Admin' : 'User';
+$userCurrent = Auth::user();
+@endphp
+
+<script>
+    const handleShowModalChat = () => {
+        let myModal = new bootstrap.Modal(document.getElementById('myModal'));
+
+        myModal.show();
+    }
+
+    $(document).ready(function() {
+        let myModal = new bootstrap.Modal(document.getElementById('myModal'));
+
+        $('#modal-button-close').click(function() {
+            myModal.hide();
+        });
+    });
+
+    // const userCurrent = @json($userCurrent);
+
+</script>
+
+@vite(['resources/js/product-detail.js'])
+
+@endif
 @endsection

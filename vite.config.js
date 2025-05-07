@@ -9,6 +9,7 @@ export default defineConfig({
         "resources/js/app.js",
         "resources/js/chat.js",
         "resources/js/box-chat.js",
+        "resources/js/product-detail.js",
       ],
       refresh: true,
     }),
