@@ -15,8 +15,13 @@ use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\Admin\ApplyVoucherController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\User\PaymentController;
 use App\Models\Cart;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 // Trang chủ
@@ -69,6 +74,14 @@ Route::middleware('auth')->group(function () {
         Route::resource('categories', CategoryController::class);
         Route::resource('orders', OrderController::class);
         Route::delete('/products/variant/{id}', [ProductController::class, 'destroyVariant'])->name('products.variant.destroy');
+
+        // Route::get('/chats', [MessageController::class, 'index']);
+        // Route::post('update/{chatId}/chats', [MessageController::class, 'handleUpdate']);
+
+
+        Route::get('/chats', [MessageController::class, 'index'])->name('chats.index');
+        Route::post('/chats/{userId}/write', [MessageController::class, 'store'])->name('chats.write');
+        Route::get('/chats/{userId}/show', [MessageController::class, 'show'])->name('chats.detail');
     });
 
 
@@ -102,4 +115,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('auth')
         ->name('user.order.detail');
     Route::post('user/orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('orders.cancel');
+});
+
+
+Route::post('/broadcasting/auth', function (Request $request) {
+    Log::info('Custom auth route hit');
+
+    return Broadcast::auth($request);
 });

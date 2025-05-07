@@ -64,46 +64,12 @@
                 </a>
             </li>
 
-            {{-- <li>
-                <a href="javascript: void(0);" class="has-arrow waves-effect">
+            <li>
+                <a href="{{ route('admin.chats.index') }}" class="waves-effect">
                     <i class="fas fa-receipt"></i>
-                    <span key="t-multi-level">Mã giảm giá</span>
-                </a>
-                <ul class="sub-menu" aria-expanded="true">
-                    <li>
-                        <a href="#" key="t-level-1-1">
-                            Quản lý voucher
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" key="t-level-1-1">
-                            Quản lý user voucher
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" class="waves-effect">
-                    <i class="fas fa-bookmark"></i>
-                    <span key="t-tags">Quản lý thẻ</span>
+                    <span key="t-vouchers">Tư vấn khách hàng</span>
                 </a>
             </li>
-
-            <li>
-                <a href="#" class="waves-effect">
-                    <i class="bx bx-receipt"></i>
-                    <span key="t-comments">Quản lý bình luận</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#" class="waves-effect">
-                    <span class="badge rounded-pill bg-danger float-end" key="t-hot">2</span>
-                    <i class="bx bx-receipt"></i>
-                    <span key="t-orders">Đơn hàng</span>
-                </a>
-            </li> --}}
         </ul>
     </div>
-    <!-- Sidebar -->
 </div>

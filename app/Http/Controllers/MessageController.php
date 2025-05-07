@@ -1,0 +1,170 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Events\ChatMessage;
+use App\Models\Conversation;
+use App\Models\Message;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
+class MessageController extends Controller
+{
+    private const PATH_VIEW = "admin.chats.";
+    public function index()
+    {
+        // return response()->json(['user' => '1']);
+
+        // $messages = Message::where('order_id', $orderId)
+        //     ->with('sender')
+        //     ->orderBy('created_at')
+        //     ->get();
+
+        // $messages = Message::with(['sender'])
+        //     ->latest('updated_at')
+        //     ->get()
+        //     ->unique('sender_id')
+        //     ->values();
+
+        // $messages = Message::with('sender')
+        //     ->where('sender_type', 'user')
+        //     ->orderBy('updated_at', 'desc')
+        //     ->get()
+        //     ->unique('sender_id');
+
+        /** code mới */
+
+        $conversations = Conversation::with(['user', 'latestMessage'])->get();
+
+        // dd($conversations);
+
+        // dd($messages);
+
+        return view(self::PATH_VIEW . __FUNCTION__, compact('conversations'));
+
+        // return response()->json($messages);
+    }
+
+    public function store(Request $request, $userId)
+    {
+        $result = [
+            'conversation_id' => $userId,
+            'sender_id' => Auth::id(),
+            'sender_type' => 'Admin',
+            'message' => $request->message,
+        ];
+
+        $message = Message::create($result);
+
+        $data = $message->load(['conversation', 'sender']);
+
+        broadcast(new ChatMessage($data))->toOthers();
+
+        return response()->json(['data' => $result, 'status' => 200]);
+
+        // return redirect()->route('admin.chats.detail', ['userId' => $userId]);
+
+        // dd($result);
+
+        // $message = Message::create([]);
+
+        // $request->validate([
+        //     'product_id' => 'required|integer',
+        //     'message' => 'required|string',
+        //     'user_id' => 'nullable'
+        // ]);
+
+        // $message = Message::create([
+        //     'product_id' => $request->product_id,
+        //     'message' => $request->message,
+        //     'sender_id' => $request->user_id,
+        // ]);
+
+        // broadcast(new ChatMessage($message))->toOthers();
+
+        // return response()->json(['data' => $request->all()]);
+    }
+
+    public function handleUpdate(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|integer',
+            'message' => 'required|string',
+            'user_id' => 'nullable'
+        ]);
+
+        $data = [
+            'product_id' => $request->product_id,
+            'message' => $request->message,
+            'sender_id' => $request->user_id,
+        ];
+
+        dd($data);
+
+        $message = Message::create([
+            'product_id' => $request->product_id,
+            'message' => $request->message,
+            'sender_id' => $request->user_id,
+        ]);
+
+        broadcast(new ChatMessage($message))->toOthers();
+
+        return response()->json(['success' => true, 'message' => $message]);
+    }
+
+    public function show($userId)
+    {
+        try {
+            // $messages = Message::with('sender')
+            //     ->where('sender_type', 'user')
+            //     ->orderBy('updated_at', 'desc')
+            //     ->get()
+            //     ->unique('sender_id');
+
+            // $currentId = Auth::id();
+            // $currentType = Auth::user()->role_id == 1 ? 'Admin' : 'User';
+            // $targetId = $userId;
+            // $targetType = 'User';
+
+            // $message = Message::with('sender')
+            //     ->where(function ($query) use ($currentId, $currentType, $targetId, $targetType) {
+            //         $query->where('sender_id', $currentId)
+            //             ->where('sender_type', $currentType)
+            //             ->where('receiver_id', $targetId)
+            //             ->where('receiver_type', $targetType);
+            //     })
+            //     ->orWhere(function ($query) use ($currentId, $currentType, $targetId, $targetType) {
+            //         $query->where('sender_id', $targetId)
+            //             ->where('sender_type', $targetType)
+            //             ->where('receiver_id', $currentId)
+            //             ->where('receiver_type', $currentType);
+            //     })
+            //     ->orderBy('created_at', 'asc')
+            //     ->get();
+
+            // dd($message);
+
+            // $message = Message::with(['sender'])
+            //     ->where('sender_id', $userId)
+            //     ->orWhere('receiver_id', $userId)
+            //     ->orderBy('created_at', 'asc')
+            //     ->get();
+
+            // dd($message);
+
+            $user = User::query()->where('id', $userId)->first();
+
+            $conversations = Conversation::with(['user', 'latestMessage'])->get();
+
+            $messages = Message::with(['conversation', 'sender'])->where('conversation_id', $userId)->get();
+
+            // dd($messages);
+
+            return view('admin.chats.show', compact('userId', 'user', 'conversations', 'messages'));
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+        }
+    }
+}
