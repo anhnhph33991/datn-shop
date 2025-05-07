@@ -85,7 +85,8 @@ class AuthController extends Controller
             $userRoleId = Auth::user()->role_id;
 
             if ($userRoleId == 1) { // Admin
-                return redirect()->route('admin.statistic.index');
+                return redirect()->route('admin.dashboard');
+                // return redirect()->route('admin.statistic.index');
             } elseif ($userRoleId == 2) { // users
                 return redirect()->route('home');
             } else {

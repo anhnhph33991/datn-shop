@@ -1,7 +1,11 @@
 <div class="container text-center">
-    <h5 class="d-inline-block">Get Up to <b>40% OFF</b> New-Season Styles</h5>
-    <a href="category.html" class="category">MEN</a>
-    <a href="category.html" class="category ml-2 mr-3">WOMEN</a>
-    <small>* Limited time only.</small>
+    <h5 class="d-inline-block">
+        Giảm giá tới
+        <b>40%</b>
+        cho mã quần áo mới
+    </h5>
+    <a href="#" class="category">Iphone</a>
+    <a href="#" class="category ml-2 mr-3">Samsung</a>
+    <small>* Chỉ có giới hạn.</small>
     <button title="Close (Esc)" type="button" class="mfp-close">×</button>
 </div>

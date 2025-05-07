@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
         return 'Chào mừng bạn đến trang Dashboard!';
     })->name('dashboard');
 
-    Route::prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('admin')->middleware(['isAdmin'])->name('admin.')->group(function () {
         Route::get('/', function () {
             return redirect()->route('admin.statistic.index');
         })->name('dashboard');

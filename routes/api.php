@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ConversationController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/chat/{orderId}', [MessageController::class, 'index']);
     Route::post('/chat', [MessageController::class, 'store']);
 });
+
+Route::get('conversation/{userId}/detail', [ConversationController::class, 'index']);
+
+Route::post('/chats/{userId}/write', [MessageController::class, 'storeClient']);

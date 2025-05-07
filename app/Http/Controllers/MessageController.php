@@ -15,36 +15,9 @@ class MessageController extends Controller
     private const PATH_VIEW = "admin.chats.";
     public function index()
     {
-        // return response()->json(['user' => '1']);
-
-        // $messages = Message::where('order_id', $orderId)
-        //     ->with('sender')
-        //     ->orderBy('created_at')
-        //     ->get();
-
-        // $messages = Message::with(['sender'])
-        //     ->latest('updated_at')
-        //     ->get()
-        //     ->unique('sender_id')
-        //     ->values();
-
-        // $messages = Message::with('sender')
-        //     ->where('sender_type', 'user')
-        //     ->orderBy('updated_at', 'desc')
-        //     ->get()
-        //     ->unique('sender_id');
-
-        /** code mới */
-
         $conversations = Conversation::with(['user', 'latestMessage'])->get();
 
-        // dd($conversations);
-
-        // dd($messages);
-
         return view(self::PATH_VIEW . __FUNCTION__, compact('conversations'));
-
-        // return response()->json($messages);
     }
 
     public function store(Request $request, $userId)
@@ -52,6 +25,24 @@ class MessageController extends Controller
         $result = [
             'conversation_id' => $userId,
             'sender_id' => Auth::id(),
+            'sender_type' => $request->sender_type,
+            'message' => $request->message,
+        ];
+
+        $message = Message::create($result);
+
+        $data = $message->load(['conversation', 'sender']);
+
+        broadcast(new ChatMessage($data))->toOthers();
+
+        return response()->json(['data' => $result, 'status' => 200]);
+    }
+
+    public function storeClient(Request $request, $userId)
+    {
+        $result = [
+            'conversation_id' => $userId,
+            'sender_id' => $request->sender_id,
             'sender_type' => $request->sender_type,
             'message' => $request->message,
         ];
