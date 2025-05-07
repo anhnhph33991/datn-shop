@@ -91,12 +91,12 @@ use Carbon\Carbon;
                                                     {{ $chat->user->name }}
                                                 </h5>
                                                 <p class="text-truncate mb-0">
-                                                    {{ $chat->latestMessage->message ?? '' }}
+                                                    {{ $chat->latestMessage->message ?? '🎊 Hãy chào bạn mới của bạn' }}
                                                 </p>
                                             </div>
 
                                             <div class="font-size-11">
-                                                {{ $chat->latestMessage->created_at->format('H:i') }}
+                                                {{-- {{ $chat->latestMessage->created_at->format('H:i') }} --}}
                                             </div>
                                         </div>
                                     </a>
@@ -393,6 +393,59 @@ use Carbon\Carbon;
                     </ul>
                 </div>
                 <div class="p-3 chat-input-section">
+
+                    {{-- @if(Auth::user()->role_id == 1 || Auth::id() == $userId)
+                    <form id="chat-box-{{ $userId }}" action="{{ route('admin.chats.write', $userId) }}" method="POST" class="row">
+                    @csrf
+                    <div class="col">
+                        <div class="position-relative">
+                            <input type="text" class="form-control chat-input" placeholder="Nhập tin nhắn của bạn..." name="message" id="chat-box-{{ $userId }}-message">
+                            <div class="chat-input-links" id="tooltip-container">
+                                <ul class="list-inline mb-0">
+                                    <li class="list-inline-item"><a href="javascript: void(0);" title="Emoji"><i class="mdi mdi-emoticon-happy-outline"></i></a>
+                                    </li>
+                                    <li class="list-inline-item"><a href="javascript: void(0);" title="Images"><i class="mdi mdi-file-image-outline"></i></a></li>
+                                    <li class="list-inline-item"><a href="javascript: void(0);" title="Add Files"><i class="mdi mdi-file-document-outline"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light" onclick="handleApply('{{ $userId }}')">
+                            <span class="d-none d-sm-inline-block me-2">Gửi</span>
+                            <i class="mdi mdi-send"></i>
+                        </button>
+                    </div>
+                    </form>
+
+                    @else
+
+                    <form class="row">
+                        <div class="col">
+                            <div class="position-relative">
+                                <input type="text" class="form-control chat-input" placeholder="Bạn không có quyền nhắn tin" name="message" disabled readonly>
+                                <div class="chat-input-links" id="tooltip-container">
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item"><a href="javascript: void(0);" title="Emoji"><i class="mdi mdi-emoticon-happy-outline"></i></a>
+                                        </li>
+                                        <li class="list-inline-item"><a href="javascript: void(0);" title="Images"><i class="mdi mdi-file-image-outline"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript: void(0);" title="Add Files"><i class="mdi mdi-file-document-outline"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-primary btn-rounded chat-send w-md waves-effect waves-light" disabled>
+                                <span class="d-none d-sm-inline-block me-2">Gửi</span>
+                                <i class="mdi mdi-send"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    @endif --}}
+
                     <form id="chat-box-{{ $userId }}" action="{{ route('admin.chats.write', $userId) }}" method="POST" class="row">
                         @csrf
                         <div class="col">
@@ -416,6 +469,7 @@ use Carbon\Carbon;
                             </button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -425,10 +479,16 @@ use Carbon\Carbon;
 
 </div>
 
+@php
+$senderType = Auth::user()->role_id == 1 ? 'Admin' : 'User';
+$userCurrent = Auth::user();
+@endphp
 
 <script>
     const APP_URL = '{{ route("admin.chats.write", $userId) }}';
     const channelId = '{{ $userId }}';
+    const senderType = @json($senderType);
+    const userCurrent = @json($userCurrent);
 
 </script>
 

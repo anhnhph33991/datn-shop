@@ -52,7 +52,7 @@ class MessageController extends Controller
         $result = [
             'conversation_id' => $userId,
             'sender_id' => Auth::id(),
-            'sender_type' => 'Admin',
+            'sender_type' => $request->sender_type,
             'message' => $request->message,
         ];
 
@@ -63,28 +63,6 @@ class MessageController extends Controller
         broadcast(new ChatMessage($data))->toOthers();
 
         return response()->json(['data' => $result, 'status' => 200]);
-
-        // return redirect()->route('admin.chats.detail', ['userId' => $userId]);
-
-        // dd($result);
-
-        // $message = Message::create([]);
-
-        // $request->validate([
-        //     'product_id' => 'required|integer',
-        //     'message' => 'required|string',
-        //     'user_id' => 'nullable'
-        // ]);
-
-        // $message = Message::create([
-        //     'product_id' => $request->product_id,
-        //     'message' => $request->message,
-        //     'sender_id' => $request->user_id,
-        // ]);
-
-        // broadcast(new ChatMessage($message))->toOthers();
-
-        // return response()->json(['data' => $request->all()]);
     }
 
     public function handleUpdate(Request $request)
@@ -117,42 +95,10 @@ class MessageController extends Controller
     public function show($userId)
     {
         try {
-            // $messages = Message::with('sender')
-            //     ->where('sender_type', 'user')
-            //     ->orderBy('updated_at', 'desc')
-            //     ->get()
-            //     ->unique('sender_id');
 
-            // $currentId = Auth::id();
-            // $currentType = Auth::user()->role_id == 1 ? 'Admin' : 'User';
-            // $targetId = $userId;
-            // $targetType = 'User';
+            // dd($userId);
 
-            // $message = Message::with('sender')
-            //     ->where(function ($query) use ($currentId, $currentType, $targetId, $targetType) {
-            //         $query->where('sender_id', $currentId)
-            //             ->where('sender_type', $currentType)
-            //             ->where('receiver_id', $targetId)
-            //             ->where('receiver_type', $targetType);
-            //     })
-            //     ->orWhere(function ($query) use ($currentId, $currentType, $targetId, $targetType) {
-            //         $query->where('sender_id', $targetId)
-            //             ->where('sender_type', $targetType)
-            //             ->where('receiver_id', $currentId)
-            //             ->where('receiver_type', $currentType);
-            //     })
-            //     ->orderBy('created_at', 'asc')
-            //     ->get();
 
-            // dd($message);
-
-            // $message = Message::with(['sender'])
-            //     ->where('sender_id', $userId)
-            //     ->orWhere('receiver_id', $userId)
-            //     ->orderBy('created_at', 'asc')
-            //     ->get();
-
-            // dd($message);
 
             $user = User::query()->where('id', $userId)->first();
 

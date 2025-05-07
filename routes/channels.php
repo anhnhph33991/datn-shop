@@ -60,11 +60,27 @@ Broadcast::channel('chat.{receiverId}', function ($user, $user1Id, $user2Id) {
 // });
 
 Broadcast::channel('conversation.{conversationId}', function ($user, $conversationId) {
-    Log::info('1111');
+    Log::info('abc channel realtime');
     Log::info($user);
     Log::info($conversationId);
     return true;
 });
+
+
+// routes/channels.php
+
+// Broadcast::channel('presence-conversation.{conversationId}', function ($user, $conversationId) {
+//     Log::info("Authorizing presence-conversation.$conversationId for user " . $user->id);
+
+//     return true; // hoặc logic kiểm tra quyền truy cập vào conversation
+// });
+
+// Broadcast::channel('presence-conversation.{conversationId}', function ($user, $conversationId) {
+//     Log::info($user); // nếu là null thì bạn chưa đăng nhập
+//     return true;
+// });
+
+
 
 // Broadcast::channel('presence-conversation.{conversationId}', function ($user, $conversationId) {
 //     return true;

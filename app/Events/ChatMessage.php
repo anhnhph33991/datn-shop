@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChatMessage implements ShouldBroadcastNow
+class ChatMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -49,8 +49,8 @@ class ChatMessage implements ShouldBroadcastNow
             'message' => $this->message->message,
             'sender_id' => $this->message->sender_id,
             'sender_type' => $this->message->sender_type,
-            // 'created_at' => $this->message->created_at->toDateTimeString(),
-            // 'product_id' => $this->message->product_id
+            'sender_name' => $this->message->sender->name,
+            'created_at' => $this->message->created_at->toDateTimeString(),
         ];
     }
 }

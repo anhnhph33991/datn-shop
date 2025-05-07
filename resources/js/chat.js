@@ -31,7 +31,7 @@ window.handleApply = function (id) {
 
   formData.append("conversation_id", id);
   formData.append("sender_id", window.user.id);
-  formData.append("sender_type", "Admin");
+  formData.append("sender_type", senderType);
   formData.append("message", message.value);
 
   const currentTime = new Date().toLocaleTimeString([], {
@@ -41,10 +41,10 @@ window.handleApply = function (id) {
 
   const messageElement = createMessageElement({
     id: id,
-    senderName: "Amin luxchill",
+    senderName: userCurrent.name,
     message: message.value,
     time: currentTime,
-    senderType: "Admin",
+    senderType: senderType,
   });
 
   contentWrapper.innerHTML += messageElement;
@@ -116,109 +116,25 @@ function createMessageElement({
   return li;
 }
 
-// window.Echo.private(`conversation.${channelId}`).listen(
-//   "ChatMessage",
-//   (data) => {
-//     console.log("Tin nhắn mới:");
-//     console.log(data);
-//   }
-// );
+Echo.channel(`conversation.${channelId}`).listen("ChatMessage", (e) => {
+  console.log(e);
 
-// window.Echo.join("conversation." + channelId)
-//   .listen("ChatMessage", function (event) {
-//     console.log("listen");
+  const ulElement = document.querySelector(`#chat-box-ul-${channelId}`);
+  const contentWrapper = ulElement.querySelector(".simplebar-content");
 
-//     console.log(event);
-//   })
-//   .error((error) => {
-//     console.error("Lỗi khi nhận sự kiện:", error);
-//   });
+  const messageElement = createMessageElement({
+    id: channelId,
+    senderName: e.sender_name,
+    message: e.message,
+    time: e.created_at,
+    senderType: e.sender_type,
+  });
 
-// window.Echo.private("conversation." + channelId).listen(
-//   "ChatMessage",
-//   function (event) {
-//     console.log("listen", event);
-//   }
-// );
+  contentWrapper.innerHTML += messageElement;
+});
 
-window.Echo.join("conversation." + channelId).listen(
-  "ChatMessage",
-  function (event) {
-    console.log("listen", event);
-  }
-);
+console.log("role");
+console.log(senderType);
+console.log("user");
 
-// .here((users) => {
-//   // $("#listOnline").empty();
-//   // users.forEach((user) => {
-//   //   $("#listOnline").append(renderOnlineUser(user));
-//   // });
-//   console.log("here");
-
-//   console.log(users);
-// })
-// .joining((user) => {
-//   // $("#listOnline").append(renderOnlineUser(user));
-//   console.log("joining");
-
-//   console.log(user);
-// })
-// .leaving((user) => {
-//   console.log("leaving");
-
-//   console.log(user);
-//   // $(`#user-${user.id}`).remove();
-// })
-
-// export function initializeChat(conversationId, userId) {
-//   // Lắng nghe channel conversation.{conversation_id} và sự kiện ChatMessage
-//   window.Echo.channel(`conversation.${conversationId}`).listen(
-//     "ChatMessage",
-//     (e) => {
-//       console.log("Tin nhắn mới:", e);
-
-//       // Append tin nhắn vào giao diện
-//       const chatBox = document.getElementById(`chat-box-${conversationId}`);
-//       if (chatBox) {
-//         const newMsg = document.createElement("div");
-//         newMsg.className =
-//           e.sender_id == userId ? "message sent" : "message received";
-//         newMsg.innerHTML = `
-//                   <p>${e.message.message}</p>
-//                   <small>${e.message.created_at}</small>
-//               `;
-//         chatBox.appendChild(newMsg);
-//         chatBox.scrollTop = chatBox.scrollHeight; // Cuộn xuống tin nhắn mới
-//       }
-//     }
-//   );
-// }
-
-// window.Echo.private(`chat.${userId}`).listen("ChatMessage", (e) => {
-//   console.log("Tin nhắn mới: ", e);
-
-//   // Append ra giao diện
-//   // const chatBox = document.getElementById("chat-messages");
-//   // const newMsg = document.createElement("div");
-//   // newMsg.innerHTML = `<div>${e.message.message}</div>`;
-//   // chatBox.appendChild(newMsg);
-// });
-
-// export function listenToChat(orderId, onMessageReceived) {
-//   window.Echo.private(`chat.${orderId}`).listen(".ChatMessage", (e) => {
-//     onMessageReceived(e);
-//   });
-// }
-
-// export async function sendMessage(orderId, message) {
-//   try {
-//     const response = await axios.post("/api/chat", {
-//       order_id: orderId,
-//       message: message,
-//     });
-
-//     return response.data;
-//   } catch (error) {
-//     console.error("Gửi tin nhắn lỗi:", error);
-//   }
-// }
+console.log(userCurrent.name);
