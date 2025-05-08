@@ -1,3 +1,7 @@
+@php
+use App\Models\Category;
+@endphp
+
 @extends('user.layouts.master')
 @section('title', 'Sản phẩm')
 @section('content')
@@ -9,7 +13,19 @@
                     <i class="icon-home"></i>
                 </a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Shop</li>
+
+            @if(request()->category_id)
+            @php
+            $category = Category::query()->where('id', request()->category_id)->first();
+            @endphp
+
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ $category->name }}
+            </li>
+            @else
+            <li class="breadcrumb-item active" aria-current="page">Tất cả sản phẩm</li>
+            @endif
+
         </ol>
     </nav>
 
@@ -34,16 +50,18 @@
                     </a>
 
                     <div class="toolbox-item toolbox-sort">
-                        <label>Sort By:</label>
+                        <label>Sắp xếp theo:</label>
 
                         <div class="select-custom">
                             <select name="orderby" class="form-control">
-                                <option value="menu_order" selected="selected">Default sorting</option>
-                                <option value="popularity">Sort by popularity</option>
-                                <option value="rating">Sort by average rating</option>
-                                <option value="date">Sort by newness</option>
-                                <option value="price">Sort by price: low to high</option>
-                                <option value="price-desc">Sort by price: high to low</option>
+                                <option value="menu_order" selected="selected">
+                                    Sắp xếp mặc định
+                                </option>
+                                <option value="popularity">Sắp xếp theo độ nổi</option>
+                                <option value="rating">Sắp xếp theo đánh giá</option>
+                                <option value="date">Sắp xếp theo độ mới</option>
+                                <option value="price">Sắp xếp theo giá: thấp đến cao</option>
+                                <option value="price-desc">Sắp xếp theo giá từ cao xuống thấp</option>
                             </select>
                         </div>
                         <!-- End .select-custom -->
@@ -54,7 +72,7 @@
                 </div>
                 <!-- End .toolbox-left -->
 
-                <div class="toolbox-right">
+                {{-- <div class="toolbox-right">
                     <div class="toolbox-item toolbox-show">
                         <label>Show:</label>
 
@@ -78,7 +96,7 @@
                         </a>
                     </div>
                     <!-- End .layout-modes -->
-                </div>
+                </div> --}}
                 <!-- End .toolbox-right -->
             </nav>
 
@@ -145,7 +163,7 @@
                             </a>
                             <a href="{{ route('singleProduct', $product->id) }}" class="btn-icon btn-add-cart">
                                 <i class="fa fa-arrow-right"></i>
-                                <span>SELECT OPTIONS</span>
+                                <span>Xem Hàng</span>
                             </a>
                             <a class="btn-quickview" title="Quick View">
                                 <i class="fas fa-external-link-alt"></i>
@@ -161,7 +179,7 @@
 
         <nav class="toolbox toolbox-pagination">
             <div class="toolbox-item toolbox-show">
-                <label>Show:</label>
+                {{-- <label>Show:</label>
 
                 <div class="select-custom">
                     <select name="count" class="form-control">
@@ -169,7 +187,7 @@
                         <option value="24">24</option>
                         <option value="36">36</option>
                     </select>
-                </div>
+                </div> --}}
                 <!-- End .select-custom -->
             </div>
             <!-- End .toolbox-item -->
@@ -268,39 +286,6 @@
                 </div>
                 <!-- End .collapse -->
             </div>
-
-
-            {{-- <div class="widget widget-color">
-                <h3 class="widget-title">
-                    <a data-toggle="collapse" href="#widget-body-4" role="button" aria-expanded="true" aria-controls="widget-body-4">Color</a>
-                </h3>
-
-                <div class="collapse show" id="widget-body-4">
-                    <div class="widget-body pb-0">
-                        <ul class="config-swatch-list">
-                            <li class="active">
-                                <a href="#" style="background-color: #000;"></a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-color: #0188cc;"></a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-color: #81d742;"></a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-color: #6085a5;"></a>
-                            </li>
-                            <li>
-                                <a href="#" style="background-color: #ab6e6e;"></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- End .widget-body -->
-                </div>
-                <!-- End .collapse -->
-            </div> --}}
-            <!-- End .widget -->
-            <!-- End .widget -->
         </div>
         <!-- End .sidebar-wrapper -->
     </aside>
