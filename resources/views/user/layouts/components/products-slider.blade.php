@@ -76,7 +76,7 @@ return asset($default); // ảnh mặc định (đặt ở public/images/default
                 </a>
                 <a href="{{ route('singleProduct', ['id' => $product->id]) }}" class="btn-icon btn-add-cart">
                     <i class="fa fa-arrow-right"></i>
-                    <span>SELECT OPTIONS</span>
+                    <span>Xem Hàng</span>
                 </a>
                 <a class="btn-quickview" title="Quick View">
                     <i class="fas fa-external-link-alt"></i>

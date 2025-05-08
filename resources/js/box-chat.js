@@ -2,11 +2,6 @@ import "./bootstrap.js";
 
 const conversationId = localStorage.getItem("conversation_id");
 
-if (!conversationId) {
-  // window.
-  console.log("Chưa đăng nhập");
-}
-
 const renderViewChat = ({
   id,
   senderName,
@@ -18,24 +13,22 @@ const renderViewChat = ({
   const rightClass = senderType === "Admin" ? "right" : "";
 
   li = `
-    
     <li class="${rightClass}">
-                    <div class="conversation-list">
-                        <div class="ctext-wrap">
-                            <div class="conversation-name">
-                                ${senderName}    
-                            </div>
-                            <p>
-                                ${message}
-                            </p>
-                            <p class="chat-time mb-0">
-                                <i class="bx bx-time-five align-middle me-1"></i>
-                                ${time}
-                            </p>
-                        </div>
-
-                    </div>
-                </li>
+      <div class="conversation-list">
+        <div class="ctext-wrap">
+          <div class="conversation-name">
+            ${senderName}    
+          </div>
+          <p>
+            ${message}
+          </p>
+          <p class="chat-time mb-0">
+            <i class="bx bx-time-five align-middle me-1"></i>
+            ${time}
+          </p>
+        </div>
+      </div>
+    </li>
     `;
 
   return li;
@@ -51,17 +44,17 @@ const renderViewChatList = (data) => {
             <div class="conversation-list ${rightClass}" >
                 <div class="ctext-wrap">
                     <div class="conversation-name">
-                        ${message.sender.name}
-                              </div>
-                              <p>
-                                  ${message.message}    
-                              </p>
-                              <p class="chat-time mb-0">
-                                  <i class="bx bx-time-five align-middle me-1"></i>
-                                  20 phút
-                              </p>
-                              </div>
-                </div>
+                      ${message.sender.name}
+                    </div>
+                    <p>
+                      ${message.message}    
+                    </p>
+                      <p class="chat-time mb-0">
+                        <i class="bx bx-time-five align-middle me-1"></i>
+                          20 phút
+                      </p>
+                  </div>
+            </div>
         </li>
     `;
     })
@@ -90,7 +83,6 @@ fetch(`https://datn-shop.me/api/conversation/${userCurrent.id}/detail`, {})
   })
   .then((data) => {
     console.log(data.data);
-    // return;
 
     localStorage.setItem("conversation_id", data.data.id);
 

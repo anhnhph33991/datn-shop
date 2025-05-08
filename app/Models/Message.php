@@ -9,15 +9,6 @@ class Message extends Model
 {
     use HasFactory;
 
-    // protected $fillable = [
-    //     'sender_id',
-    //     'sender_type',
-    //     'receiver_id',
-    //     'product_id',
-    //     'message',
-    //     'read_at',
-    // ];
-
     protected $fillable = ['conversation_id', 'sender_id', 'sender_type', 'message'];
 
     public function conversation()

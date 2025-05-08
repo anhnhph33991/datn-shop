@@ -296,14 +296,14 @@ use Carbon\Carbon;
                 <div class="row">
                     <div class="col-md-4 col-9">
                         <h5 class="font-size-15 mb-1">
-                            {{ $user->name }}
+                            {{ $conversation->user->name }}
                         </h5>
                         <p class="text-muted mb-0"><i class="mdi mdi-circle text-success align-middle me-1"></i>
                             Hoạt động
                         </p>
                     </div>
                     <div class="col-md-8 col-3">
-                        <ul class="list-inline user-chat-nav text-end mb-0">
+                        {{-- <ul class="list-inline user-chat-nav text-end mb-0">
                             <li class="list-inline-item d-none d-sm-inline-block">
                                 <div class="dropdown">
                                     <button class="btn nav-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -352,7 +352,7 @@ use Carbon\Carbon;
                                 </div>
                             </li>
 
-                        </ul>
+                        </ul> --}}
                     </div>
                 </div>
             </div>

@@ -1,13 +1,5 @@
 import "./bootstrap.js";
 
-// console.log("1111");
-
-// const userId = document
-//   .querySelector('meta[name="user-id"]')
-//   .getAttribute("content");
-
-// const userId = 7;
-
 window.handleApply = function (id) {
   const form = document.querySelector(`#chat-box-${id}`);
   const message = document.querySelector(`#chat-box-${id}-message`);
@@ -84,33 +76,30 @@ function createMessageElement({
 
   li = `
     <li class='${rightClass}'>
-                              <div class="conversation-list">
-                                <div class="dropdown">
-
-                                    <a class="dropdown-toggle" href="chat.html#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="chat.html#">Copy</a>
-                                        <a class="dropdown-item" href="chat.html#">Save</a>
-                                        <a class="dropdown-item" href="chat.html#">Forward</a>
-                                        <a class="dropdown-item" href="chat.html#">Delete</a>
-                                    </div>
-                                </div>
-                                <div class="ctext-wrap">
-                                    <div class="conversation-name">${senderName}</div>
-                                    <p>
-                                        ${message}
-                                    </p>
-                                    <p class="chat-time mb-0">
-                                        <i class="bx bx-time-five align-middle me-1"></i>
-                                        ${time}
-                                    </p>
-                                </div>
-
-                            </div>
-                        </li>
-  
+      <div class="conversation-list">
+        <div class="dropdown">
+          <a class="dropdown-toggle" href="chat.html#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="bx bx-dots-vertical-rounded"></i>
+          </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="chat.html#">Copy</a>
+              <a class="dropdown-item" href="chat.html#">Save</a>
+              <a class="dropdown-item" href="chat.html#">Forward</a>
+              <a class="dropdown-item" href="chat.html#">Delete</a>
+            </div>
+        </div>
+        <div class="ctext-wrap">
+          <div class="conversation-name">${senderName}</div>
+            <p>
+              ${message}
+            </p>
+            <p class="chat-time mb-0">
+            <i class="bx bx-time-five align-middle me-1"></i>
+              ${time}
+            </p>
+        </div>
+      </div>
+    </li>
   `;
 
   return li;

@@ -86,20 +86,17 @@ class MessageController extends Controller
     public function show($userId)
     {
         try {
-
-            // dd($userId);
-
-
-
             $user = User::query()->where('id', $userId)->first();
 
             $conversations = Conversation::with(['user', 'latestMessage'])->get();
 
             $messages = Message::with(['conversation', 'sender'])->where('conversation_id', $userId)->get();
 
-            // dd($messages);
+            $conversation = Conversation::with(['user', 'latestMessage', 'messages'])->where('id', $userId)->first();
 
-            return view('admin.chats.show', compact('userId', 'user', 'conversations', 'messages'));
+            // dd($conversation->user->name);
+
+            return view('admin.chats.show', compact('userId', 'user', 'conversations', 'messages', 'conversation'));
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
         }
