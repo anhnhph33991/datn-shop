@@ -58,8 +58,11 @@ use Carbon\Carbon;
 
             <div class="search-box chat-search-box py-4">
                 <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Tìm kiếm người dùng...">
-                    <i class="bx bx-search-alt search-icon"></i>
+                    <form action="" method="GET">
+                        <input hidden type="text" class="form-control" placeholder="Tìm kiếm người dùng..." name="user_id" value="{{ $userId }}">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm người dùng..." name="search">
+                        <i class="bx bx-search-alt search-icon"></i>
+                    </form>
                 </div>
             </div>
 
@@ -361,7 +364,6 @@ use Carbon\Carbon;
             <div>
                 <div class="chat-conversation p-3">
                     <ul id="chat-box-ul-{{ $userId }}" class="list-unstyled mb-0" data-simplebar style="max-height: 486px;">
-
                         @foreach ($messages as $message)
                         <li class="{{ $message->sender_type == 'Admin' ? 'right' : '' }}">
                             <div class="conversation-list">

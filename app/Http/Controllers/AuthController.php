@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conversation;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -51,6 +52,18 @@ class AuthController extends Controller
             'image' => $imageName,
             'role_id' => $userRole->id,
         ]);
+
+        $conversation = Conversation::query()
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$conversation || empty($conversation)) {
+            Conversation::create([
+                'user_id' => $user->id,
+            ]);
+        }
+
+        // dd($user);
 
         // Đăng nhập người dùng ngay sau khi đăng ký
         Auth::login($user);

@@ -1,23 +1,38 @@
 <div class="footer-middle">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="widget">
-                    <h4 class="widget-title">Contact Info</h4>
+                    <h4 class="widget-title">Thông tin liên hệ</h4>
                     <ul class="contact-info">
                         <li>
-                            <span class="contact-info-label">Address:</span>123 Street Name, City, England
+                            <span class="contact-info-label">
+                                Địa chỉ:
+                            </span>
+                            Song Phương, Hoài Đức, Hà Nội
                         </li>
                         <li>
-                            <span class="contact-info-label">Phone:</span><a href="tel:">(123)
-                                456-7890</a>
+                            <span class="contact-info-label">
+                                Số Điện Thoại:
+                            </span>
+                            <a href="tel:">
+                                0367253666
+                            </a>
                         </li>
                         <li>
-                            <span class="contact-info-label">Email:</span> <a href="https://portotheme.com/cdn-cgi/l/email-protection#a1ccc0c8cde1c4d9c0ccd1cdc48fc2cecc"><span class="__cf_email__" data-cfemail="cba6aaa2a78baeb3aaa6bba7aee5a8a4a6">[email&#160;protected]</span></a>
+                            <span class="contact-info-label">
+                                Email:
+                            </span>
+                            <a href="#">
+                                <span class="__cf_email__" data-cfemail="cba6aaa2a78baeb3aaa6bba7aee5a8a4a6">[hr@pina.com]</span>
+                            </a>
                         </li>
                         <li>
-                            <span class="contact-info-label">Working Days/Hours:</span> Mon - Sun / 9:00 AM
-                            - 8:00 PM
+                            <span class="contact-info-label">
+                                Thời gian làm việc
+                            </span>
+                            Thứ Hai - Chủ Nhật / 9:00 sáng
+                            - 8:00 tối
                         </li>
                     </ul>
                     <div class="social-icons">
@@ -29,30 +44,8 @@
                 </div>
                 <!-- End .widget -->
             </div>
-            <!-- End .col-lg-3 -->
 
-            <div class="col-lg-3 col-sm-6">
-                <div class="widget">
-                    <h4 class="widget-title">Customer Service</h4>
-
-                    <ul class="links">
-                        <li><a href="demo4.html#">Help & FAQs</a></li>
-                        <li><a href="demo4.html#">Order Tracking</a></li>
-                        <li><a href="demo4.html#">Shipping & Delivery</a></li>
-                        <li><a href="demo4.html#">Orders History</a></li>
-                        <li><a href="demo4.html#">Advanced Search</a></li>
-                        <li><a href="dashboard.html">My Account</a></li>
-                        <li><a href="demo4.html#">Careers</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="demo4.html#">Corporate Sales</a></li>
-                        <li><a href="demo4.html#">Privacy</a></li>
-                    </ul>
-                </div>
-                <!-- End .widget -->
-            </div>
-            <!-- End .col-lg-3 -->
-
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="widget">
                     <h4 class="widget-title">Popular Tags</h4>
 
@@ -74,7 +67,7 @@
             </div>
             <!-- End .col-lg-3 -->
 
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="widget widget-newsletter">
                     <h4 class="widget-title">Subscribe newsletter</h4>
                     <p>Get all the latest information on events, sales and offers. Sign up for newsletter:
@@ -99,7 +92,7 @@
     <div class="footer-bottom">
         <div class="container d-sm-flex align-items-center">
             <div class="footer-left">
-                <span class="footer-copyright">© Porto eCommerce. 2021. All Rights Reserved</span>
+                <span class="footer-copyright">DATN 2025 by: Pina</span>
             </div>
 
             <div class="footer-right ml-auto mt-1 mt-sm-0">

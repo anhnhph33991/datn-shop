@@ -83,13 +83,12 @@ class MessageController extends Controller
         return response()->json(['success' => true, 'message' => $message]);
     }
 
-    public function show($userId)
+    public function show(Request $request, $userId)
     {
         try {
             $user = User::query()->where('id', $userId)->first();
 
             $conversations = Conversation::with(['user', 'latestMessage'])->get();
-
             $messages = Message::with(['conversation', 'sender'])->where('conversation_id', $userId)->get();
 
             $conversation = Conversation::with(['user', 'latestMessage', 'messages'])->where('id', $userId)->first();

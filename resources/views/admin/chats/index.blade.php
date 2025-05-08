@@ -87,14 +87,23 @@ use Carbon\Carbon;
                                                 <h5 class="text-truncate font-size-14 mb-1">
                                                     {{ $chat->user->name }}
                                                 </h5>
+                                                @if($chat->latestMessage)
                                                 <p class="text-truncate mb-0">
                                                     {{ $chat->latestMessage->message ?? '' }}
                                                 </p>
+                                                @else
+                                                <p class="text-truncate mb-0">
+                                                    🎊 Hãy chào bạn mới của bạn
+                                                </p>
+                                                @endif
                                             </div>
 
+                                            @if($chat->latestMessage)
                                             <div class="font-size-11">
-                                                {{ $chat->latestMessage->created_at->format('H:i') }}
+                                                {{ $chat->latestMessage->created_at->format('H:i') ?? '' }}
                                             </div>
+                                            @endif
+
                                         </div>
                                     </a>
                                 </li>
