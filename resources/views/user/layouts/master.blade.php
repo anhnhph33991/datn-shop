@@ -88,7 +88,7 @@
 <body>
 
     <div class="page-wrapper">
-        <div class="top-notice bg-primary text-white">
+        <div class="top-notice bg-primary text-white d-none" id="notice-voucher">
             @include('user.layouts.components.top-notice')
         </div>
 
@@ -239,7 +239,7 @@
     </script>
 
     @vite(['resources/js/box-chat.js'])
-
+    @vite(['resources/js/voucher-notification.js'])
     @endif
 </body>
 

@@ -23,9 +23,9 @@ class Voucher extends Model
     protected $dates = ['start', 'end'];
 
     public function isValid()
-{
-    return $this->is_active && now()->between($this->start, $this->end);
-}
+    {
+        return $this->is_active && now()->between($this->start, $this->end);
+    }
 
 
     public function applyDiscount($orderTotal)
@@ -42,5 +42,4 @@ class Voucher extends Model
 
         return min($discount, $this->max_discount_amount);
     }
-
 }

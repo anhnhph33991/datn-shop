@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\VoucherNotification;
 use App\Http\Controllers\Controller;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class VoucherController extends Controller
             return $query->where('code', 'like', "%$search%");
         })->orderBy('id', 'desc')->paginate(10);
 
-        return view('admin.vouchers.index', ['title' => 'Quản lý Voucher'],compact('vouchers', 'search'));
+        return view('admin.vouchers.index', ['title' => 'Quản lý Voucher'], compact('vouchers', 'search'));
     }
 
     public function create()
@@ -36,7 +37,10 @@ class VoucherController extends Controller
             'is_active' => 'boolean',
         ]);
 
-        Voucher::create($request->all());
+        $voucher = Voucher::create($request->all());
+
+        broadcast(new VoucherNotification($voucher))->toOthers();
+
         return redirect()->route('admin.vouchers.index')->with('success', 'Tạo voucher thành công');
     }
 
